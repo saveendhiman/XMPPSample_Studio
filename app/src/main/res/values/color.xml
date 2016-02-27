@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="sidebar_background">#F7F7F7</color>
+    <color name="sidebar_backg">#FFFFFF</color>
+    <color name="green_dot">#1da03f</color>
+    <color name="pass_or_driver_border">#FFC003</color>
+    <color name="list_divider">#C6C6C6</color>
+    <color name="whitebg">#f0eff3</color>
+    <color name="actionBarBg">#EF4824</color>
+    <color name="testcolor">#aaaaaa</color>
+    <color name="textwhite">#fff</color>
+    <color name="textred">#ff0000</color>
+    <color name="textsmall">#616161</color>
+    <color name="dark_slate_gray">#2F4F4F</color>
+    <color name="gray_2">#AFAFAF</color>
+    <color name="gray_1">#C0C0C0</color>
+    <color name="bordercolor">#A1A1A1</color>
+    <color name="black">#000000</color>
+    <color name="headingcolor">#C4C4C4</color>
+    <color name="white">#ffffff</color>
+    <color name="cx_border">#838281</color>
+    <color name="gray_light">#f2f2f2</color>
+    <color name="gray3">#838281</color>
+    <color name="logintextback">#23B7E8</color>
+    <color name="red">#ff0000</color>
+    <color name="txt_sel">#dfbd31</color>
+    <color name="textcolordark">#2b2c2a</color>
+    <color name="textcolor">#737373</color>
+    <color name="textback">#F4F4ED</color>
+    <color name="upgrade_text">#6075CA</color>
+    <color name="bluetext">#5474E9</color>
+    <color name="newsselectionback">#F4F4ED</color>
+    <color name="red_back">#DB1600</color>
+    <color name="txtvideo">#4B4B4B</color>
+    <color name="cameratext">#AAA9A9</color>
+    <color name="TextColor">#5e5d59</color>
+    <color name="TextIntro">#cdcdcd</color>
+    <color name="slide_dark_gray">#463F39</color>
+    <color name="slide_dark_black">#35312E</color>
+    <color name="focused">#3FA0E0</color>
+    <color name="blue">#0000FF</color>
+    <color name="green">#008000</color>
+    <color name="playhead_edge">#c0cccccc</color>
+    <color name="playhead_fill">#800667c8</color>
+    <color name="audio_waveform">#ffcf8104</color>
+    <color name="audio_loop_separator">#40cf8104</color>
+    <color name="playhead_tick_color">#80cccccc</color>
+    <color name="orange">#ffcf8104</color>
+
+    <!-- ajoisdfjosjfosjfoskjfosdk -->
+
+    <color name="blue_light">#ffb5e0f4</color>
+
+    <color name="cyan">#ff00ffff</color>
+    <color name="text_grey">#ff9d9e9e</color>
+    <color name="text_dark">#ff5b5b5b</color>
+    <color name="background">#fff5f8f8</color>
+    <color name="grey">#ffebecec</color>
+
+    <color name="trip_green">#1da03f</color>
+    <color name="trip_yellow">#ffcc66</color>
+    <color name="trip_red">#d00008</color>
+    
+    
+    <!-- FOR REFRESH SWIPE LAYOUT -->
+    <color name="live4">#F6E5E4</color>
+    <color name="live3">#763830</color>
+    <color name="live2">#E43E1A</color>
+    <color name="livewhite">#FFFFFF</color>
+
+</resources>

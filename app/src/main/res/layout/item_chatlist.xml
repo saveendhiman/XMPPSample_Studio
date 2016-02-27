@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:descendantFocusability="blocksDescendants" >
+
+    <ImageView
+        android:id="@id/imageChat"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_chat_person" />
+
+    <TextView
+        android:id="@id/textContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5.0dip"
+        android:layout_toRightOf="@id/imageChat"
+        android:text="Live user"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@id/textMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/textContact"
+        android:layout_below="@id/textContact"
+        android:inputType="text"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@id/textStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/textContact"
+        android:layout_marginRight="10dip"
+        android:text="Online"
+        android:textAppearance="?android:textAppearanceSmall" />
+
+    <TextView
+        android:id="@id/tvbages_livechat"
+        android:layout_width="40dip"
+        android:layout_height="40dip"
+        android:layout_alignBaseline="@id/textMessage"
+        android:layout_alignBottom="@id/textMessage"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dip"
+        android:gravity="center"
+        android:text="0"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:textColor="@color/whitebg"
+        android:textSize="14.0sp" />
+
+</RelativeLayout>

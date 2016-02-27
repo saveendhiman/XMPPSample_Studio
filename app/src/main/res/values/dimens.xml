@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="project_picker_item_overlay_vertical_inset">20dip</dimen>
+    <dimen name="project_picker_item_overlay_horizontal_inset">20dip</dimen>
+    <dimen name="project_picker_item_overlay_height">28dip</dimen>
+    <dimen name="project_picker_item_font_size">14sp</dimen>
+    <dimen name="activity_horizontal_margin">16.0dip</dimen>
+    <dimen name="activity_vertical_margin">16.0dip</dimen>
+    <dimen name="image_size">48dp</dimen>
+    <dimen name="keyboard_height">230dp</dimen>
+
+</resources>

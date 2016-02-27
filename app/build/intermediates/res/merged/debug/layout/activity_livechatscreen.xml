@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llfragment_livechat"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff5f8f8"
+    android:gravity="center_horizontal"
+    android:keepScreenOn="true"
+    android:orientation="vertical" >
+
+    <View
+        android:id="@+id/topView"
+        android:layout_width="fill_parent"
+        android:layout_height="3.0dip"
+        android:background="@color/blue" />
+
+    <ListView
+        android:id="@id/listLiveChat"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0"
+        android:divider="#00000000"
+        android:dividerHeight="0.0dip"
+        android:transcriptMode="normal" />
+
+    <LinearLayout
+        android:id="@+id/layoutChatting"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        android:orientation="vertical"
+        android:padding="12.0dip" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5.0dip"
+            android:orientation="horizontal" >
+
+            <!-- <ImageView -->
+            <!-- android:id="@+id/attachAttach" -->
+            <!-- android:layout_width="wrap_content" -->
+            <!-- android:layout_height="match_parent" -->
+            <!-- android:layout_gravity="center_vertical" -->
+            <!-- android:background="@color/blue" -->
+            <!-- android:paddingLeft="6dp" -->
+            <!-- android:paddingRight="12dp" -->
+            <!-- android:visibility="gone" -->
+            <!-- android:src="@android:drawable/ic_menu_add" /> -->
+
+            <EditText
+                android:id="@id/editMessage"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@color/white"
+                android:hint="Say Something"
+                android:inputType="textMultiLine"
+                android:maxLines="7"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="vertical" />
+
+            <ImageView
+                android:id="@+id/attachImage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="6dp"
+                android:paddingRight="12dp"
+                android:src="@drawable/emoji_btn_normal" />
+
+            <ImageView
+                android:id="@id/buttonSend"
+                android:layout_width="50.0dip"
+                android:layout_height="32.0dip"
+                android:background="@null"
+                android:paddingLeft="7.0dip"
+                android:paddingRight="7.0dip"
+                android:src="@drawable/send_chat"
+                android:text="Send"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@id/textSupportTyping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4.0dip"
+            android:text="Your opponent is typing..."
+            android:textColor="@color/text_grey"
+            android:visibility="gone" />
+
+        <!-- *******space******** -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="10dp" >
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/footer_for_emoticons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_height"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+    </LinearLayout>
+
+</LinearLayout>

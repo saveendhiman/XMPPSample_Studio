@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="home" />
+    <item type="id" name="action_bar_activity_content" />
+    <item type="id" name="action_menu_divider" />
+    <item type="id" name="action_menu_presenter" />
+    <item type="id" name="progress_circular" />
+    <item type="id" name="progress_horizontal" />
+    <item type="id" name="action_bar_root">false</item>
+    <item type="id" name="action_bar_container">false</item>
+    <item type="id" name="action_bar">false</item>
+    <item type="id" name="action_context_bar">false</item>
+    <item type="id" name="split_action_bar">false</item>
+    <item type="id" name="action_bar_overlay_layout">false</item>
+    <item type="id" name="top_action_bar">false</item>
+    <item type="id" name="up">false</item>
+    <item type="id" name="action_bar_title">false</item>
+    <item type="id" name="action_bar_subtitle">false</item>
+    <item type="id" name="action_mode_close_button">false</item>
+    <item type="id" name="activity_chooser_view_content">false</item>
+    <item type="id" name="expand_activities_button">false</item>
+    <item type="id" name="image">false</item>
+    <item type="id" name="default_activity_button">false</item>
+    <item type="id" name="list_item">false</item>
+    <item type="id" name="icon">false</item>
+    <item type="id" name="title">false</item>
+    <item type="id" name="expanded_menu">false</item>
+    <item type="id" name="checkbox">false</item>
+    <item type="id" name="shortcut">false</item>
+    <item type="id" name="radio">false</item>
+    <item type="id" name="edit_query">false</item>
+    <item type="id" name="search_bar">false</item>
+    <item type="id" name="search_badge">false</item>
+    <item type="id" name="search_button">false</item>
+    <item type="id" name="search_edit_frame">false</item>
+    <item type="id" name="search_mag_icon">false</item>
+    <item type="id" name="search_plate">false</item>
+    <item type="id" name="search_src_text">false</item>
+    <item type="id" name="search_close_btn">false</item>
+    <item type="id" name="submit_area">false</item>
+    <item type="id" name="search_go_btn">false</item>
+    <item type="id" name="search_voice_btn">false</item>
+    <item type="id" name="login_status">false</item>
+    <item type="id" name="login_status_message">false</item>
+    <item type="id" name="login_form">false</item>
+    <item type="id" name="phone">false</item>
+    <item type="id" name="password">false</item>
+    <item type="id" name="login">false</item>
+    <item type="id" name="sign_in_button">false</item>
+<!--     <item type="id" name="main">false</item> -->
+    <item type="id" name="com_facebook_picker_list_view">false</item>
+    <item type="id" name="com_facebook_picker_activity_circle">false</item>
+    <item type="id" name="com_facebook_login_activity_progress_bar">false</item>
+    <item type="id" name="com_facebook_picker_row_activity_circle">false</item>
+    <item type="id" name="com_facebook_picker_checkbox">false</item>
+    <item type="id" name="com_facebook_picker_image">false</item>
+    <item type="id" name="com_facebook_picker_profile_pic_stub">false</item>
+    <item type="id" name="com_facebook_picker_title">false</item>
+    <item type="id" name="com_facebook_picker_checkbox_stub">false</item>
+    <item type="id" name="com_facebook_picker_list_section_header">false</item>
+    <item type="id" name="com_facebook_picker_top_bar">false</item>
+    <item type="id" name="com_facebook_picker_done_button">false</item>
+    <item type="id" name="com_facebook_picker_divider">false</item>
+    <item type="id" name="com_facebook_picker_title_bar_stub">false</item>
+    <item type="id" name="com_facebook_picker_title_bar">false</item>
+    <item type="id" name="picker_subtitle">false</item>
+    <item type="id" name="com_facebook_search_bar_view">false</item>
+    <item type="id" name="com_facebook_picker_search_text">false</item>
+    <item type="id" name="com_facebook_usersettingsfragment_logo_image">false</item>
+    <item type="id" name="com_facebook_usersettingsfragment_profile_name">false</item>
+    <item type="id" name="com_facebook_usersettingsfragment_login_button">false</item>
+    <item type="id" name="listView">false</item>
+    <item type="id" name="layout_status">false</item>
+    <item type="id" name="layout_sync">false</item>
+    <item type="id" name="buttonSync">false</item>
+    <item type="id" name="textView1">false</item>
+    <item type="id" name="editSubject">false</item>
+    <item type="id" name="spinnerType">false</item>
+    <item type="id" name="textView2">false</item>
+    <item type="id" name="numberPicker1">false</item>
+    <item type="id" name="numberPicker2">false</item>
+    <item type="id" name="numberPicker3">false</item>
+    <item type="id" name="buttonNext">false</item>
+    <item type="id" name="listChat">false</item>
+    <item type="id" name="listLiveChat">false</item>
+    <item type="id" name="listLiveChat_chatdirector">false</item>
+    <item type="id" name="listLiveChat_group">false</item>
+    <item type="id" name="editMessage">false</item>
+    <item type="id" name="editMessage_group">false</item>
+    <item type="id" name="editMessage_chatdirector">false</item>
+    <item type="id" name="buttonSend">false</item>
+    <item type="id" name="buttonSend_group">false</item>
+    <item type="id" name="buttonSend_chatdirector">false</item>
+    <item type="id" name="textSupportTyping">false</item>
+    <item type="id" name="textSupportTyping_group">false</item>
+    <item type="id" name="textSupportTyping_chatdirector">false</item>
+    <item type="id" name="tabHome">false</item>
+    <item type="id" name="tabSurvey">false</item>
+    <item type="id" name="container">false</item>
+    <item type="id" name="pager">false</item>
+    <item type="id" name="buttonDone">false</item>
+    <item type="id" name="imageChat">false</item>
+        <item type="id" name="tvbages_livechat">false</item>
+    <item type="id" name="textContact">false</item>
+    <item type="id" name="textMessage">false</item>
+    <item type="id" name="textStatus">false</item>
+    <item type="id" name="arrowLeft">false</item>
+    <item type="id" name="layoutMessage">false</item>
+    <item type="id" name="text1">false</item>
+    <item type="id" name="textWhoSent">false</item>
+    <item type="id" name="arrowRight">false</item>
+    <item type="id" name="action_forgot_password">false</item>
+    <item type="id" name="action_group">false</item>
+    <item type="id" name="action_contact">false</item>
+    <item type="id" name="action_search">false</item>
+    <item type="id" name="action_profile">false</item>
+    <item type="id" name="action_qrscan">false</item>
+    <item type="id" name="action_notifications">false</item>
+    <item type="id" name="action_settings">false</item>
+    <item type="id" name="action_feedback">false</item>
+    <item type="id" name="action_logout">false</item>
+    
+    
+    
+       <item type="id" name="left_view_width" />
+    <item type="id" name="playhead_offset" />
+    <item type="id" name="playhead_type" />
+    
+</resources>
