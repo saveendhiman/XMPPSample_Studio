@@ -1,43 +1,5 @@
 package com.xmpp.chat.data;
 
-import java.io.File;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
-import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.ChatManager;
-import org.jivesoftware.smack.ChatManagerListener;
-import org.jivesoftware.smack.PacketListener;
-import org.jivesoftware.smack.RosterEntry;
-import org.jivesoftware.smack.RosterListener;
-import org.jivesoftware.smack.SmackException.NoResponseException;
-import org.jivesoftware.smack.SmackException.NotConnectedException;
-import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.XMPPException.XMPPErrorException;
-import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Packet;
-import org.jivesoftware.smack.packet.PacketExtension;
-import org.jivesoftware.smack.packet.Presence;
-import org.jivesoftware.smack.packet.Presence.Type;
-import org.jivesoftware.smack.util.Base64;
-import org.jivesoftware.smack.util.StringUtils;
-import org.jivesoftware.smackx.chatstates.packet.ChatStateExtension;
-import org.jivesoftware.smackx.delay.packet.DelayInfo;
-import org.jivesoftware.smackx.disco.ServiceDiscoveryManager;
-import org.jivesoftware.smackx.filetransfer.FileTransferListener;
-import org.jivesoftware.smackx.filetransfer.FileTransferManager;
-import org.jivesoftware.smackx.filetransfer.FileTransferNegotiator;
-import org.jivesoftware.smackx.filetransfer.FileTransferRequest;
-import org.jivesoftware.smackx.iqlast.LastActivityManager;
-import org.jivesoftware.smackx.vcardtemp.packet.VCard;
-
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -54,10 +16,57 @@ import com.xmpp.chat.util.EmojiUtil;
 import com.xmpp.chat.util.SettingsUtil;
 import com.xmpp.chat.xmpp.XMPP;
 
+
+
+import org.jivesoftware.smack.PacketListener;
+import org.jivesoftware.smack.SmackException.NoResponseException;
+import org.jivesoftware.smack.SmackException.NotConnectedException;
+import org.jivesoftware.smack.StanzaListener;
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.XMPPException.XMPPErrorException;
+import org.jivesoftware.smack.chat.Chat;
+import org.jivesoftware.smack.chat.ChatManager;
+import org.jivesoftware.smack.chat.ChatManagerListener;
+import org.jivesoftware.smack.packet.ExtensionElement;
+import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.packet.Packet;
+import org.jivesoftware.smack.packet.PacketExtension;
+import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.packet.Presence.Type;
+import org.jivesoftware.smack.packet.Stanza;
+import org.jivesoftware.smack.roster.Roster;
+import org.jivesoftware.smack.roster.RosterEntry;
+import org.jivesoftware.smack.roster.RosterListener;
+import org.jivesoftware.smack.util.StringUtils;
+import org.jivesoftware.smack.util.stringencoder.Base64;
+import org.jivesoftware.smackx.chatstates.packet.ChatStateExtension;
+import org.jivesoftware.smackx.delay.packet.DelayInformation;
+import org.jivesoftware.smackx.disco.ServiceDiscoveryManager;
+import org.jivesoftware.smackx.filetransfer.FileTransferListener;
+import org.jivesoftware.smackx.filetransfer.FileTransferManager;
+import org.jivesoftware.smackx.filetransfer.FileTransferNegotiator;
+import org.jivesoftware.smackx.filetransfer.FileTransferRequest;
+import org.jivesoftware.smackx.iqlast.LastActivityManager;
+import org.jivesoftware.smackx.vcardtemp.packet.VCard;
+import org.jxmpp.jid.Jid;
+import org.jxmpp.jid.impl.JidCreate;
+import org.jxmpp.stringprep.XmppStringprepException;
+
+import java.io.File;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 public class DataProvider {
 
 	// Listeners
-	PacketListener packetListener;
+	StanzaListener packetListener;
 	LastActivityManager lastActivityManager;
 	FileTransferListener fileListener;
 	ChatManagerListener chatListener;
@@ -77,20 +86,20 @@ public class DataProvider {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static MyListWrapper<MessageItem> getMessages(String jid) {
-		if (get().messages.containsKey(StringUtils.parseBareAddress(jid))) {
-			return get().messages.get(StringUtils.parseBareAddress(jid));
+	public static MyListWrapper<MessageItem> getMessages(String jid) throws XmppStringprepException {
+		if (get().messages.containsKey(JidCreate.domainBareFrom(jid))) {
+			return get().messages.get(JidCreate.domainBareFrom(jid));
 		}
 
 		MyListWrapper<MessageItem> msgs = null;
 		try {
 			msgs = new MyListWrapper(DatabaseHelper.getInstance(LiveApp.get())
 					.getDao(MessageItem.class)
-					.queryForEq("opponent", StringUtils.parseBareAddress(jid)));
+					.queryForEq("opponent", JidCreate.domainBareFrom(jid)));
 		} catch (SQLException e) {
 			msgs = new MyListWrapper<MessageItem>();
 		}
-		get().messages.put(StringUtils.parseBareAddress(jid), msgs);
+		get().messages.put((jid), msgs);
 		return msgs;
 	}
 
@@ -117,24 +126,22 @@ public class DataProvider {
 
 		rosterListener = new RosterListener() {
 
-			public void entriesAdded(Collection<String> entries) {
+			public void entriesAdded(Collection<Jid> entries) {
 				System.out.println(entries.toString());
 				listUpdated();
-				for (String str : entries) {
+				for (Jid str : entries) {
 					ChatItem chatItem = new ChatItem();
 					// Log.e("tag", "DataProvider ::" + chatItem.displayName +
 					// "," + chatItem.jid);
-					chatItem.jid = str;
+					chatItem.jid = str.getLocalpartOrNull().toString();
 
-					chatItem.displayName = addedChats.containsKey(StringUtils
-							.parseBareAddress(chatItem.jid)) ? addedChats
-							.get(StringUtils.parseBareAddress(chatItem.jid)).displayName
+					chatItem.displayName = addedChats.containsKey((chatItem.jid)) ? addedChats
+							.get((chatItem.jid)).displayName
 							: DatabaseHelper
 									.getInstance(LiveApp.get())
 									.getDisplayName(
 											LiveApp.get(),
-											StringUtils
-													.parseBareAddress(chatItem.jid));
+											(chatItem.jid));
 					Log.e("taggi", "values 1 ::" + chatItem.displayName + " , "
 							+ str);
 
@@ -146,42 +153,39 @@ public class DataProvider {
 					// DatabaseHelper.getInstance(LiveApp.get()).getDisplayName(LiveApp.get(),
 					// StringUtils.parseBareAddress(chatItem.displayName));
 
-					if (addedChats.containsKey(StringUtils
-							.parseBareAddress(chatItem.jid))) {
-						byte[] img = addedChats.get(StringUtils
-								.parseBareAddress(chatItem.jid)).imageByte;
+					if (addedChats.containsKey((chatItem.jid))) {
+						byte[] img = addedChats.get((chatItem.jid)).imageByte;
 						if (img == null) {
 							VCard card = new VCard();
 							try {
 								card.load(
 										XMPP.getInstance().getConnection(
-												LiveApp.get()), chatItem.jid);
-								addedChats.get(StringUtils
-										.parseBareAddress(chatItem.jid)).imageByte = card
+												LiveApp.get()), JidCreate.entityBareFrom(chatItem.jid));
+								addedChats.get((chatItem.jid)).imageByte = card
 										.getAvatar();
-								if (addedChats.get(StringUtils
-										.parseBareAddress(chatItem.jid)).imageByte != null) {
+								if (addedChats.get((chatItem.jid)).imageByte != null) {
 									DatabaseHelper
 											.getInstance(LiveApp.get())
 											.updateContact(
-													addedChats.get(StringUtils
-															.parseBareAddress(chatItem.jid)));
+													addedChats.get((chatItem.jid)));
 								}
-								img = addedChats.get(StringUtils
-										.parseBareAddress(chatItem.jid)).imageByte;
+								img = addedChats.get((chatItem.jid)).imageByte;
 							} catch (NoResponseException e) {
 								e.printStackTrace();
 							} catch (NotConnectedException e) {
 								e.printStackTrace();
 							} catch (XMPPErrorException e) {
 								e.printStackTrace();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							} catch (XmppStringprepException e) {
+								e.printStackTrace();
 							}
 						}
 						chatItem.imageByte = img;
 					}
 
-					if (!lastMessages.containsKey(StringUtils
-							.parseBareAddress(chatItem.jid))) {
+					if (!lastMessages.containsKey(chatItem.jid)) {
 						continue;
 					}
 
@@ -203,22 +207,22 @@ public class DataProvider {
 						Log.e("tag", "DataProvider chats found ::" + chats);
 					}
 
-					if (lastMessages.containsKey(StringUtils
-							.parseBareAddress(chatItem.jid))) {
-						chatItem.lastMessage = lastMessages.get(StringUtils
-								.parseBareAddress(chatItem.jid)).message;
+					if (lastMessages.containsKey((chatItem.jid))) {
+						chatItem.lastMessage = lastMessages.get((chatItem.jid)).message;
 						chatItem.lastMessageTimestamp = lastMessages
-								.get(StringUtils.parseBareAddress(chatItem.jid)).timestamp;
-						chatItem.isNewMessages = lastMessages.get(StringUtils
-								.parseBareAddress(chatItem.jid)).isNewMessage;
+								.get((chatItem.jid)).timestamp;
+						chatItem.isNewMessages = lastMessages.get((chatItem.jid)).isNewMessage;
 					}
 				}
 				sortChats();
 				for (int i = 0; i < chats.size(); i++) {
-					Iterator<Presence> pr = XMPP.getInstance()
-							.getConnection(LiveApp.get()).getRoster()
-							.getPresences(((ChatItem) chats.get(i)).jid)
-							.iterator();
+					Iterator<Presence> pr = null;
+					try {
+						pr = Roster.getInstanceFor(XMPP.getInstance().getConnection(LiveApp.get()))
+                                .getPresences(JidCreate.bareFrom(chats.get(i).jid)).iterator();
+					} catch (XmppStringprepException e) {
+						e.printStackTrace();
+					}
 					while (pr.hasNext()) {
 						if (((Presence) pr.next()).getType() == Presence.Type.available) {
 							((ChatItem) chats.get(i)).status = "Online";
@@ -231,21 +235,20 @@ public class DataProvider {
 			}
 
 			public void entriesDeleted(
-					Collection<String> paramAnonymousCollection) {
+					Collection<Jid> paramAnonymousCollection) {
 				System.out.println(paramAnonymousCollection.toString());
 			}
 
 			public void entriesUpdated(
-					Collection<String> paramAnonymousCollection) {
+					Collection<Jid> paramAnonymousCollection) {
 				System.out.println(paramAnonymousCollection.toString());
 			}
 
 			public void presenceChanged(Presence presence) {
 				for (ChatItem chat : chats) {
 					if ((!chat.isGroup)
-							&& (StringUtils.parseBareAddress(chat.jid)
-									.equals(StringUtils
-											.parseBareAddress(presence
+							&& ((chat.jid)
+									.equals((presence
 													.getFrom())))) {
 						chat.status = presence.isAvailable() ? "Online"
 								: chat.status;
@@ -255,7 +258,7 @@ public class DataProvider {
 			}
 		};
 
-		XMPP.getInstance().getConnection(LiveApp.get()).getRoster()
+		Roster.getInstanceFor(XMPP.getInstance().getConnection(LiveApp.get()))
 				.addRosterListener(rosterListener);
 
 		chatListener = new ChatManagerListener() {
@@ -265,7 +268,7 @@ public class DataProvider {
 				if (arg0.getThreadID() == null && !local) {
 					for (ChatItem chat : chats) {
 
-						if (chat.jid.equals(StringUtils.parseBareAddress(arg0
+						if (chat.jid.equals((arg0
 								.getParticipant()))) {
 							chat.thread = arg0.getThreadID();
 							break;
@@ -278,10 +281,9 @@ public class DataProvider {
 		ChatManager.getInstanceFor(
 				XMPP.getInstance().getConnection(LiveApp.get()))
 				.addChatListener(chatListener);
-		final FileTransferManager fileManager = new FileTransferManager(XMPP
-				.getInstance().getConnection(LiveApp.get()));
-		FileTransferNegotiator.setServiceEnabled(XMPP.getInstance()
-				.getConnection(LiveApp.get()), true);
+		final FileTransferManager fileManager = FileTransferManager.getInstanceFor(XMPP.getInstance().getConnection(LiveApp.get()));
+		FileTransferNegotiator.isServiceEnabled(XMPP.getInstance()
+				.getConnection(LiveApp.get()));
 
 		fileListener = new FileTransferListener() {
 
@@ -335,19 +337,21 @@ public class DataProvider {
 				messageItem.file = outFile.getAbsolutePath();
 				messageItem.timestamp = Calendar.getInstance()
 						.getTimeInMillis();
-				messageItem.opponent = StringUtils.parseBareAddress(transfer
-						.getRequestor());
+
+					messageItem.opponent = (transfer
+                            .getRequestor().getLocalpartOrNull().toString());
+
 				messageItem.opponentDisplay = DatabaseHelper.getInstance(
 						LiveApp.get()).getDisplayName(LiveApp.get(),
-						StringUtils.parseBareAddress(transfer.getRequestor()));
+						(transfer.getRequestor().getLocalpartOrNull().toString()));
 				if (group != null && group.length() > 0) {
-					String sender = StringUtils.parseBareAddress(group);
+					String sender = (group);
 					messageItem.opponent = sender;
 					messageItem.opponentDisplay = DatabaseHelper.getInstance(
 							LiveApp.get()).getDisplayName(
 							LiveApp.get(),
-							StringUtils.parseBareAddress(transfer
-									.getRequestor()));
+							(transfer
+									.getRequestor().getLocalpartOrNull().toString()));
 				}
 				// Crashlytics.log(Log.WARN, "liveApp", "Message for " +
 				// outFile.getAbsolutePath() + " added");
@@ -369,11 +373,11 @@ public class DataProvider {
 				Log.e("tag", "DataProvider chats fileListener ::" + chats);
 				for (ChatItem chatItem : chats) {
 					boolean isGroup = group != null
-							&& StringUtils.parseName(group).equals(
-									StringUtils.parseName(chatItem.jid));
+							&& (group).equals(
+									(chatItem.jid));
 					if (isGroup
-							|| transfer.getRequestor().startsWith(
-									StringUtils.parseName(chatItem.jid))) {
+							|| transfer.getRequestor().getLocalpartOrNull().toString().startsWith(
+									(chatItem.jid))) {
 						chatItem.lastMessageTimestamp = System
 								.currentTimeMillis();
 						chatItem.lastMessage = EmojiUtil.getFileType(outFile);
@@ -392,14 +396,13 @@ public class DataProvider {
 				sdm.addFeature("http://jabber.org/protocol/disco#info");
 				sdm.addFeature("jabber:iq:privacy");
 
-				FileTransferNegotiator.setServiceEnabled(XMPP.getInstance()
-						.getConnection(LiveApp.get()), true);
+				FileTransferNegotiator.isServiceEnabled(XMPP.getInstance().getConnection(LiveApp.get()));
 				FileTransferNegotiator.IBB_ONLY = true;
 
 				// FileTransferManager fileManager = new
 				// FileTransferManager(XMPP.getInstance().getConnection(LiveApp.get()));
-				FileTransferNegotiator.setServiceEnabled(XMPP.getInstance()
-						.getConnection(LiveApp.get()), true);
+				FileTransferNegotiator.isServiceEnabled(XMPP.getInstance()
+						.getConnection(LiveApp.get()));
 				fileManager.addFileTransferListener(fileListener);
 			}
 		};
@@ -414,10 +417,10 @@ public class DataProvider {
 
 		fileManager.addFileTransferListener(fileListener);
 
-		packetListener = new PacketListener() {
+		packetListener = new StanzaListener() {
 
 			@Override
-			public void processPacket(Packet packet)
+			public void processPacket(Stanza packet)
 					throws NotConnectedException {
 				if ((packet instanceof Message)) {
 					// Collection<PacketExtension> extensions =
@@ -626,52 +629,44 @@ public class DataProvider {
 
 	private void initRoaster() {
 		try {
-			if (XMPP.getInstance().getRoaster() == null) {
+			if (XMPP.getInstance().getRoster() == null) {
 				return;
 			}
-			Collection<RosterEntry> rosters = XMPP.getInstance().getRoaster()
+			Collection<RosterEntry> rosters = XMPP.getInstance().getRoster()
 					.getEntries();
 			for (RosterEntry roster : rosters) {
 				ChatItem chatItem = new ChatItem();
 
-				chatItem.jid = StringUtils.parseBareAddress(roster.getUser());
+				chatItem.jid = (roster.getUser());
 
-				chatItem.displayName = addedChats.containsKey(StringUtils
-						.parseBareAddress(chatItem.jid)) ? addedChats
-						.get(StringUtils.parseBareAddress(chatItem.jid)).displayName
+				chatItem.displayName = addedChats.containsKey((chatItem.jid)) ? addedChats
+						.get((chatItem.jid)).displayName
 						: DatabaseHelper
 								.getInstance(LiveApp.get())
 								.getDisplayName(
 										LiveApp.get(),
-										StringUtils
-												.parseBareAddress(chatItem.jid));
+										(chatItem.jid));
 
 				// Log.e("taggi", "values 2 ::" + chatItem.displayName + " , " +
 				// chatItem.jid);
 
-				if (addedChats.containsKey(StringUtils
-						.parseBareAddress(chatItem.jid))) {
-					byte[] img = addedChats.get(StringUtils
-							.parseBareAddress(chatItem.jid)).imageByte;
+				if (addedChats.containsKey((chatItem.jid))) {
+					byte[] img = addedChats.get((chatItem.jid)).imageByte;
 					if (img == null) {
 						VCard card = new VCard();
 						try {
 							card.load(
 									XMPP.getInstance().getConnection(
-											LiveApp.get()), chatItem.jid);
-							addedChats.get(StringUtils
-									.parseBareAddress(chatItem.jid)).imageByte = card
+											LiveApp.get()), JidCreate.entityBareFrom(chatItem.jid));
+							addedChats.get((chatItem.jid)).imageByte = card
 									.getAvatar();
-							if (addedChats.get(StringUtils
-									.parseBareAddress(chatItem.jid)).imageByte != null) {
+							if (addedChats.get((chatItem.jid)).imageByte != null) {
 								DatabaseHelper
 										.getInstance(LiveApp.get())
 										.updateContact(
-												addedChats.get(StringUtils
-														.parseBareAddress(chatItem.jid)));
+												addedChats.get((chatItem.jid)));
 							}
-							img = addedChats.get(StringUtils
-									.parseBareAddress(chatItem.jid)).imageByte;
+							img = addedChats.get((chatItem.jid)).imageByte;
 						} catch (NoResponseException e) {
 							e.printStackTrace();
 						} catch (Exception e) {
@@ -682,14 +677,11 @@ public class DataProvider {
 				}
 				chatItem.status = RosterManager.getLastActivity(LiveApp.get(),
 						chatItem.jid, false);
-				if (lastMessages.containsKey(StringUtils
-						.parseBareAddress(chatItem.jid))) {
-					chatItem.lastMessage = lastMessages.get(StringUtils
-							.parseBareAddress(chatItem.jid)).message;
+				if (lastMessages.containsKey((chatItem.jid))) {
+					chatItem.lastMessage = lastMessages.get((chatItem.jid)).message;
 					chatItem.lastMessageTimestamp = lastMessages
-							.get(StringUtils.parseBareAddress(chatItem.jid)).timestamp;
-					chatItem.isNewMessages = lastMessages.get(StringUtils
-							.parseBareAddress(chatItem.jid)).isNewMessage;
+							.get((chatItem.jid)).timestamp;
+					chatItem.isNewMessages = lastMessages.get((chatItem.jid)).isNewMessage;
 					boolean found = false;
 					for (ChatItem chat : chats) {
 						if (chat.jid.equals(chatItem.jid)) {
@@ -732,10 +724,8 @@ public class DataProvider {
 
 			for (int i = 0; i < chats.size(); i++) {
 				if (!chats.get(i).isGroup) {
-					Iterator<Presence> pr = XMPP.getInstance()
-							.getConnection(LiveApp.get()).getRoster()
-							.getPresences(((ChatItem) chats.get(i)).jid)
-							.iterator();
+					Iterator<Presence> pr = Roster.getInstanceFor(XMPP.getInstance().getConnection(LiveApp.get()))
+							.getPresences(JidCreate.bareFrom(chats.get(i).jid)).iterator();
 					while (pr.hasNext()) {
 						if (((Presence) pr.next()).getType() == Presence.Type.available) {
 							((ChatItem) chats.get(i)).status = "Online";
@@ -779,6 +769,8 @@ public class DataProvider {
 			// }
 			// });
 		} catch (XMPPException localXMPPException) {
+		} catch (XmppStringprepException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -787,12 +779,12 @@ public class DataProvider {
 		Log.e("tai", "message.getType() ::" + message.getType());
 		Log.e("tai",
 				"StringUtils.getType() ::"
-						+ StringUtils.parseResource(message.getFrom()));
+						+ (message.getFrom().getResourceOrNull().toString()));
 		Log.e("tai", "XMPP.getInstance() ::"
 				+ XMPP.getInstance().getConnection(LiveApp.get()).getUser());
 
 		if (message.getType() == Message.Type.groupchat
-				&& StringUtils.parseResource(message.getFrom()).length() == 0) {
+				&& (message.getFrom().getResourceOrNull().toString()).length() == 0) {
 			return;
 		}
 
@@ -800,13 +792,13 @@ public class DataProvider {
 		// return;
 		// }
 
-		for (PacketExtension extension : message.getExtensions()) {
+		for (ExtensionElement extension : message.getExtensions()) {
 			if (extension instanceof ChatStateExtension) {
 				String typing = ((ChatStateExtension) extension)
 						.getElementName();
 				for (ChatItem chat : chats) {
-					if (StringUtils.parseBareAddress(chat.jid).equals(
-							StringUtils.parseBareAddress(message.getFrom()))) {
+					if ((chat.jid).equals(
+							(message.getFrom()))) {
 						if (typing.equals("composing")) {
 							chat.typing = "is typing...";
 						} else {
@@ -903,17 +895,16 @@ public class DataProvider {
 			m.message = message.getBody();
 			m.outMessage = false;
 			m.timestamp = Calendar.getInstance().getTimeInMillis();
-			m.opponent = StringUtils.parseBareAddress(message.getFrom());
+			m.opponent = (message.getFrom().getLocalpartOrNull().toString());
 			m.isNewMessage = true;
 
 			if (message.getType().equals(Message.Type.groupchat)) {
 				SettingsUtil.setLastHistory(LiveApp.get(),
-						StringUtils.parseBareAddress(m.opponent));
+						(m.opponent));
 				for (ChatItem chat : chats) {
-					if (StringUtils.parseBareAddress(chat.jid).equals(
+					if (chat.jid.equals(
 							m.opponent)) {
-						m.groupSender = StringUtils.parseResource(message
-								.getFrom());
+						m.groupSender = (message.getFrom().getResourceOrNull().toString());
 						if (m.groupSender.equals(XMPP.getInstance()
 								.getConnection(LiveApp.get()).getUser())) {
 							m.outMessage = true;
@@ -923,17 +914,16 @@ public class DataProvider {
 									.getInstance(LiveApp.get())
 									.getDisplayName(
 											LiveApp.get(),
-											StringUtils
-													.parseBareAddress(m.groupSender));
+											(m.groupSender));
 						}
 						m.opponentDisplay = m.groupSender;
 
 						long time = Calendar.getInstance().getTimeInMillis();
 						// boolean newMessage = true;
-						for (PacketExtension ext : message.getExtensions()) {
-							if (ext instanceof DelayInfo) {
+						for (ExtensionElement ext : message.getExtensions()) {
+							if (ext instanceof DelayInformation) {
 								// newMessage = false;
-								DelayInfo delay = (DelayInfo) ext;
+								DelayInformation delay = (DelayInformation) ext;
 								time = delay.getStamp().getTime();
 								return;
 							}
@@ -953,7 +943,7 @@ public class DataProvider {
 			} else {
 
 				for (ChatItem chat : chats) {
-					if (StringUtils.parseBareAddress(chat.jid).equals(
+					if ((chat.jid).equals(
 							m.opponent)) {
 						chatFound = true;
 						chat.lastMessage = message.getBody();
@@ -971,28 +961,33 @@ public class DataProvider {
 				}
 
 				if (!chatFound) {
-					ChatItem chat = new ChatItem();
-					chat.status = RosterManager.getLastActivity(LiveApp.get(),
-							StringUtils.parseBareAddress(message.getFrom()),
-							false);
-					chat.displayName = DatabaseHelper.getInstance(
-							LiveApp.get()).getDisplayName(LiveApp.get(),
-							StringUtils.parseBareAddress(message.getFrom()));
-					chat.thread = message.getThread();
-					chat.jid = StringUtils.parseBareAddress(message.getFrom());
-					chat.lastMessage = message.getBody();
-					chat.isNewMessages = true;
-					chat.lastMessageTimestamp = Calendar.getInstance()
-							.getTimeInMillis();
 
-					Presence pr = new Presence(Type.subscribe);
-					pr.setFrom(XMPP.getInstance().getConnection(LiveApp.get())
-							.getUser());
-					pr.setTo(chat.jid);
+					ChatItem chat = null;
 					try {
+						chat = new ChatItem();
+						chat.status = RosterManager.getLastActivity(LiveApp.get(),
+								message.getFrom().getLocalpartOrNull().toString(),false);
+						chat.displayName = DatabaseHelper.getInstance(
+								LiveApp.get()).getDisplayName(LiveApp.get(),
+								((message.getFrom().getLocalpartOrNull().toString())));
+						chat.thread = message.getThread();
+						chat.jid = (message.getFrom().getLocalpartOrNull().toString());
+						chat.lastMessage = message.getBody();
+						chat.isNewMessages = true;
+						chat.lastMessageTimestamp = Calendar.getInstance()
+								.getTimeInMillis();
+
+						Presence pr = new Presence(Type.subscribe);
+						pr.setFrom(XMPP.getInstance().getConnection(LiveApp.get())
+								.getUser());
+						pr.setTo(JidCreate.bareFrom(chat.jid));
 						XMPP.getInstance().getConnection(LiveApp.get())
-								.sendPacket(pr);
+								.sendStanza(pr);
 					} catch (NotConnectedException e) {
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (XmppStringprepException e) {
 						e.printStackTrace();
 					}
 					Log.e("tag", "DataProvider chats parseMessage11 ::" + chats);
@@ -1005,13 +1000,17 @@ public class DataProvider {
 			}
 
 			lastMessages
-					.put(StringUtils.parseBareAddress(message.getFrom()), m);
+					.put(message.getFrom().getLocalpartOrNull().toString(), m);
 
 			new Handler(Looper.getMainLooper()).post(new Runnable() {
 
 				@Override
 				public void run() {
-					getMessages(message.getFrom()).add(m);
+					try {
+						getMessages(message.getFrom().getLocalpartOrNull().toString()).add(m);
+					} catch (XmppStringprepException e) {
+						e.printStackTrace();
+					}
 					notifyWatchers();
 				}
 			});

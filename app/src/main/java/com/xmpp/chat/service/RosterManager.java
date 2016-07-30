@@ -8,8 +8,10 @@ import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smackx.iqlast.LastActivityManager;
 import org.jivesoftware.smackx.iqlast.packet.LastActivity;
+import org.jxmpp.jid.impl.JidCreate;
 
 import com.xmpp.chat.dao.StatusItem;
 import com.xmpp.chat.data.DatabaseHelper;
@@ -22,11 +24,13 @@ public class RosterManager {
 
 	public static String getLastActivity(Context context, String jid, boolean showStatus) {
 		try {
-			LastActivity la = LastActivityManager.getInstanceFor(XMPP.getInstance().getConnection(context)).getLastActivity(jid);
+			LastActivity la = LastActivityManager.getInstanceFor(XMPP.getInstance().getConnection(context)).getLastActivity(JidCreate.bareFrom(jid));
 			long seconds = la.lastActivity;
 			if (seconds == 0) {
-				if (showStatus) { 
-					Iterator<Presence> pr = XMPP.getInstance().getConnection(context).getRoster().getPresences(jid).iterator();
+				if (showStatus) {
+					Roster roster = Roster.getInstanceFor( XMPP.getInstance().getConnection(context));
+//					Iterator<Presence> pr = XMPP.getInstance().getConnection(context).getRoster().getPresences(jid).iterator();
+					Iterator<Presence> pr = roster.getPresences(JidCreate.bareFrom(jid)).iterator();
 					while (pr.hasNext()) {
 						Presence p = ((Presence) pr.next());
 						if (p.getType() == Presence.Type.available) {

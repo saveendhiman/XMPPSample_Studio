@@ -2,7 +2,7 @@ package com.example.xmppsample;
 
 import java.io.IOException;
 
-import org.apache.harmony.javax.security.sasl.SaslException;
+
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
@@ -45,8 +45,8 @@ public class Activity_ListUser extends Activity implements OnClickListener {
         context = Activity_ListUser.this;
         activity = Activity_ListUser.this;
         init();
-        etHostName.setText("192.168.0.233");
-        etServerName.setText("192.168.0.233");
+        etHostName.setText(XMPP.HOST);
+        etServerName.setText(XMPP.HOST);
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -116,11 +116,13 @@ public class Activity_ListUser extends Activity implements OnClickListener {
                 return true;
             } catch (XMPPException e1) {
                 e1.printStackTrace();
-            } catch (SaslException e1) {
-                e1.printStackTrace();
             } catch (SmackException e1) {
                 e1.printStackTrace();
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
             } catch (IOException e1) {
+                e1.printStackTrace();
+            }catch (Exception e1){
                 e1.printStackTrace();
             }
         }

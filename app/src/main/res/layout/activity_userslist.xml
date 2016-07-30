@@ -225,7 +225,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.3"
                 android:gravity="center"
-                android:hint="192.168.0.233"
+                android:hint="@string/XMPP_SERVER"
                 android:inputType="text"
                 android:paddingRight="10dp"
                 android:singleLine="true"

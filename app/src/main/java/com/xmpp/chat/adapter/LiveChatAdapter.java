@@ -14,6 +14,8 @@ import org.jivesoftware.smackx.filetransfer.FileTransferManager;
 import org.jivesoftware.smackx.filetransfer.FileTransferNegotiator;
 import org.jivesoftware.smackx.filetransfer.IncomingFileTransfer;
 import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
+import org.jxmpp.jid.impl.JidCreate;
+import org.jxmpp.stringprep.XmppStringprepException;
 
 import com.example.xmppsample.R;
 import com.xmpp.chat.dao.ChatItem;
@@ -116,7 +118,7 @@ public class LiveChatAdapter extends BaseAdapter {
 						final File file = new File(item.file);
 						// if (file.exists())
 						// return;
-						final FileTransferManager fileManager = new FileTransferManager(
+						final FileTransferManager fileManager = FileTransferManager.getInstanceFor(
 								XMPP.getInstance().getConnection(context));
 						item.progress = 0;
 						notifyDataSetChanged();
@@ -125,8 +127,13 @@ public class LiveChatAdapter extends BaseAdapter {
 
 							@Override
 							public void run() {
-								OutgoingFileTransfer transfer = fileManager
-										.createOutgoingFileTransfer(chatItem.jid + "/Smack");
+								OutgoingFileTransfer transfer = null;
+								try {
+									transfer = fileManager
+                                            .createOutgoingFileTransfer(JidCreate.entityFullFrom(chatItem.jid+"/Smack"));
+								} catch (XmppStringprepException e) {
+									e.printStackTrace();
+								}
 								if (chatItem.isGroup) {
 									
 								} else {
@@ -209,8 +216,7 @@ public class LiveChatAdapter extends BaseAdapter {
 								sdm.addFeature("http://jabber.org/protocol/disco#info");
 								sdm.addFeature("jabber:iq:privacy");
 
-								FileTransferNegotiator.setServiceEnabled(XMPP.getInstance().getConnection(context),
-										true);
+								FileTransferNegotiator.isServiceEnabled(XMPP.getInstance().getConnection(context));
 								FileTransferNegotiator.IBB_ONLY = true;
 
 								Status finalStatus = transfer.getStatus();

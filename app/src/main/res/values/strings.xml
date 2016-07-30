@@ -4,5 +4,7 @@
     <string name="app_name">XMPPSample</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <!--<string name="XMPP_SERVER">192.168.0.233</string>-->
+    <string name="XMPP_SERVER">52.221.221.164</string>
 
 </resources>

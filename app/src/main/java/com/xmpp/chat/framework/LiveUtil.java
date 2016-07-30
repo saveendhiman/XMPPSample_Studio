@@ -34,7 +34,7 @@ public class LiveUtil {
 	}
 
 	public static String getRandomHash(Context context) {
-		String digest = XMPP.getInstance().getConnection(context).getUser() + Calendar.getInstance().getTimeInMillis();
+		String digest = XMPP.getInstance().getConnection(context).getUser().toString() + Calendar.getInstance().getTimeInMillis();
 		String chatId = null;
 		try {
 			chatId = new BigInteger(1, MessageDigest.getInstance("MD5").digest(digest.getBytes())).toString(16);
