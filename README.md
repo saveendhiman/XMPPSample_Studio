@@ -1,6 +1,4 @@
-# XMPPSample_Studio
 # XMPP Sample for android
-
 
 Hi guys, I have made one sample for xmpp. Its Extensible Messaging and Presence Protocol(XMPP) is a communication protocol for messge-oriented middleware based on XML(Extensible Markup Language).
 
