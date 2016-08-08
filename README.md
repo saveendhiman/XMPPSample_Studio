@@ -24,20 +24,20 @@ Everything is dynamic. You have to enter ip address of your server where openfir
 
 Features summary:
 
-Free!
-Run an XMPP Server
-Use the built-in certificate or use your own for SSL/TLS
-Set users
-Add a Dynamic DNS Updater using the local or public IP of your device
-Enable modules: One to one chat, database, notification and user is online till you want(background service).
+* Free!
+* Run an XMPP Server
+* Use the built-in certificate or use your own for SSL/TLS
+* Set users
+* Add a Dynamic DNS Updater using the local or public IP of your device
+* Enable modules: One to one chat, database, notification and user is online till you want(background service).
 ★★Features★★
 
-One to one communication.
-Emojis.
-Database handling.
-Notification handling.
-Background service you user is online till you want.
-Typing status.
-Online users
-Duration of online users.
-Avatar from roster.
+* One to one communication.
+* Emojis.
+* Database handling.
+* Notification handling.
+* Background service you user is online till you want.
+* Typing status.
+* Online users
+* Duration of online users.
+* Avatar from roster.
