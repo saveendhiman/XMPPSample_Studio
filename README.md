@@ -10,11 +10,11 @@ Step 2. Install openfire in your system.If you are trying in local otherwise you
 
 Step 3. Go to below link of github to download my sample for xmpp.
 
-https://github.com/saveendhiman/XMPPSample_Studio
+[XMPP Sample]
 
 Also checkout the video from here, how it worked
 
-https://www.youtube.com/watch?v=OrL9mepFLQU
+[You tube]
 
 Step 4. Enter any id for your xmpp user and you should enter your correct server name and host name from your openfire server.Now enter your opposite user id and then press in online or in android icon. Chat screen opened.
 
@@ -48,6 +48,33 @@ Features summary:
 
 minSdkVersion 14
 
+##DONATIONS
+
+This project needs you! If you would like to support this project's further development, the creator of this project or the continuous maintenance of this project, feel free to donate. Your donation is highly appreciated (and I love food, coffee and beer). Thank you!
+
+**PayPal**
+
+* **[Donate $5]**: Thank's for creating this project, here's a coffee (or some beer) for you!
+
+* **[Donate $10]**: Wow, I am stunned. Let me take you to the movies!ù
+
+* **[Donate $15]**: I really appreciate your work, let's grab some lunch!
+
+* **[Donate $25]**: That's some awesome stuff you did right there, dinner is on me!
+
+* **[Donate $50]**: I really really want to support this project, great job!
+
+* **[Donate $100]**: You are the man! This project saved me hours (if not days) of struggle and hard work, simply awesome!
+
+* **[Donate $2799]**: Go buddy, buy Macbook Pro for yourself!
+
+Of course, you can also choose what you want to donate, all donations are awesome!!
+
+
+#Start from
+
+minSdkVersion 14
+
 #LICENSE
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
@@ -58,4 +85,18 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 #Authors
 
-https://github.com/saveendhiman original Author
+[Saveen Dhiman] original Author
+
+
+[Donate $5]: 		  https://www.paypal.me/saveendhiman/5
+[Donate $10]:  		https://www.paypal.me/saveendhiman/10
+[Donate $15]:  		https://www.paypal.me/saveendhiman/15
+[Donate $25]:  		https://www.paypal.me/saveendhiman/25
+[Donate $50]: 		https://www.paypal.me/saveendhiman/50
+[Donate $100]: 		https://www.paypal.me/saveendhiman/100
+[Donate $2799]: 	https://www.paypal.me/saveendhiman/2799
+
+[XMPP Sample]: 	https://github.com/saveendhiman/XMPPSample_Studio
+
+[You tube]: 	https://www.youtube.com/watch?v=OrL9mepFLQU
+
