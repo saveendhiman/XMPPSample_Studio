@@ -96,6 +96,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 [Donate $100]: 		https://www.paypal.me/saveendhiman/100
 [Donate $2799]: 	https://www.paypal.me/saveendhiman/2799
 
+[Saveen Dhiman]:  https://github.com/saveendhiman
+
 [XMPP Sample]: 	https://github.com/saveendhiman/XMPPSample_Studio
 
 [You tube]: 	https://www.youtube.com/watch?v=OrL9mepFLQU
